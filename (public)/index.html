@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tetris Neon</title>
+  <link rel="stylesheet" href="styles.css">
+  <link rel="icon" href="icone.ico" type="x-icon"> 
+  <meta name="description" content="Jogue o clássico Tetris com visual Neon Cyberpunk. Projeto desenvolvido por alunos da UCP. Salve seu recorde no ranking global!">
+    <meta name="keywords" content="Tetris, Game, UCP, Neon, Cyberpunk, JavaScript, Firebase">
+    <meta name="author" content="Arthur Vinagre e Pedro Prado">
+    <meta name="theme-color" content="#050505">
+
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://tetris2-ucp.web.app/">
+    <meta property="og:title" content="Tetris Neon | Projeto UCP">
+    <meta property="og:description" content="Desafie a gravidade e a velocidade neste Tetris futurista! Jogue agora e tente entrar no Top 3.">
+    <meta property="og:image" content="https://tetris2-ucp.web.app/icone.png">
+    <meta property="og:image:width" content="512">
+    <meta property="og:image:height" content="512">
+
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="Tetris Neon | Projeto UCP">
+    <meta name="twitter:description" content="Jogue o clássico Tetris com visual Neon Cyberpunk. Tente bater o recorde!">
+    <meta name="twitter:image" content="https://tetris2-ucp.web.app/icone.png">
+</head>
+<body>
+    <div id="particle-background"></div>
+
+    <div class="main-container text-center">
+        <div id="logo-container">
+            <img src="logo.gif" alt="Logo Tetris" id="logo" style="width: 100%; max-width: 500px;">
+        </div>
+        
+        <p style="margin: 20px 0; font-size: 1.2rem;">Clique abaixo para iniciar</p>
+        
+        <button onclick="window.location.href='game.html'" class="neon-btn" style="font-size: 1.5rem; padding: 15px 40px;">
+            JOGAR
+        </button>
+
+        <div id="sobre" style="margin-top: 30px;">
+            <a href="about.html" class="neon-link">Sobre o Projeto</a>
+        </div>
+    </div>
+
+    <script type="module">
+        import * as THREE from 'https://cdn.jsdelivr.net/npm/three@0.150.1/build/three.module.js';
+        
+        const container = document.getElementById('particle-background');
+        if(container) {
+            const scene = new THREE.Scene();
+            const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+            const renderer = new THREE.WebGLRenderer({ alpha: true });
+            renderer.setSize(window.innerWidth, window.innerHeight);
+            container.appendChild(renderer.domElement);
+            camera.position.z = 5;
+
+            const particles = new THREE.Group();
+            scene.add(particles);
+            const geo = new THREE.SphereGeometry(0.05, 8, 8);
+            const mat = new THREE.MeshBasicMaterial({ color: 0xffffff, transparent: true });
+
+            for (let i = 0; i < 300; i++) {
+                const mesh = new THREE.Mesh(geo, mat);
+                mesh.position.set((Math.random()-0.5)*20, (Math.random()-0.5)*20, (Math.random()-0.5)*20);
+                particles.add(mesh);
+            }
+
+            function animate() {
+                requestAnimationFrame(animate);
+                particles.rotation.y += 0.002;
+                renderer.render(scene, camera);
+            }
+            animate();
+        }
+    </script>
+</body>
+</html>
